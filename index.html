@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فدرال | 𝒇𝒆𝒅𝒓𝒂𝒍</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+      --accent-color: #ff4e50;
+      --success-color: #00b894;
+      --warning-color: #fdcb6e;
+      --text-color: #333;
+      --light-text: #fff;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --border-radius: 12px;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460);
+      color: var(--text-color);
+      direction: rtl;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    /* صفحه لودینگ */
+    .loading-page {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      color: white;
+    }
+    
+    .loading-logo {
+      width: 200px;
+      height: 200px;
+      margin-bottom: 30px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .logo-circle {
+      position: absolute;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      animation: rotate 3s linear infinite;
+    }
+    
+    .logo-circle-1 {
+      width: 180px;
+      height: 180px;
+      border-top: 3px solid #ff4e50;
+      border-bottom: 3px solid #ff4e50;
+    }
+    
+    .logo-circle-2 {
+      width: 150px;
+      height: 150px;
+      border-left: 3px solid #2575fc;
+      border-right: 3px solid #2575fc;
+      animation-direction: reverse;
+    }
+    
+    .logo-circle-3 {
+      width: 120px;
+      height: 120px;
+      border-top: 3px solid #00b894;
+      border-bottom: 3px solid #00b894;
+    }
+    
+    .logo-text {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: white;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+      z-index: 10;
+      position: relative;
+    }
+    
+    .logo-text::before {
+      content: "𝒇𝒆𝒅𝒓𝒂𝒍";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: transparent;
+      background: linear-gradient(45deg, #ff4e50, #2575fc, #00b894, #fdcb6e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      text-shadow: 0 0 15px rgba(255, 78, 80, 0.7);
+      animation: lightning 2s infinite;
+    }
+    
+    @keyframes lightning {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; text-shadow: 0 0 20px rgba(255, 78, 80, 0.9), 0 0 30px rgba(37, 117, 252, 0.7); }
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .loading-text {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    .channel-btn {
+      margin-top: 30px;
+      padding: 12px 25px;
+      background: linear-gradient(135deg, #ff4e50, #ff6b6b);
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255,78,80,0.4);
+      transition: var(--transition);
+    }
+    
+    .channel-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255,78,80,0.6);
+    }
+    
+    .loading-progress {
+      width: 200px;
+      height: 4px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 2px;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+    
+    .loading-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ff4e50, #2575fc);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    
+    /* صفحه هدایت به PumpGame */
+    .pump-redirect-page {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9998;
+      color: white;
+      display: none;
+    }
+    
+    .pump-logo {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 30px;
+      background: url('https://pwa.pumpgame.ir/static/images/logo.png') center/contain no-repeat;
+    }
+    
+    .redirect-timer {
+      font-size: 1.2rem;
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      display: none;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      margin-bottom: 20px;
+    }
+    
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--light-text);
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    
+    .logo::before {
+      content: "𝒇𝒆𝒅𝒓𝒂𝒍";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: transparent;
+      background: linear-gradient(45deg, #ff4e50, #2575fc, #00b894, #fdcb6e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      text-shadow: 0 0 15px rgba(255, 78, 80, 0.7);
+      animation: lightning 2s infinite;
+    }
+    
+    .user-stats {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .user-stat {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 5px 10px;
+      border-radius: 20px;
+      color: var(--light-text);
+      font-size: 0.8rem;
+      backdrop-filter: blur(5px);
+    }
+    
+    .user-icon {
+      color: var(--light-text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .user-icon:hover {
+      transform: scale(1.1);
+    }
+    
+    .welcome-section {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    
+    .welcome-title {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+    
+    .welcome-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .service-card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-height: 180px;
+      justify-content: space-between;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .service-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    
+    .service-emoji {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    
+    .service-title {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--primary-color);
+    }
+    
+    .service-description {
+      font-size: 0.8rem;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    
+    .service-badge {
+      background: var(--primary-color);
+      color: var(--light-text);
+      padding: 4px 8px;
+      border-radius: 15px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    
+    .service-price {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-top: 5px;
+    }
+    
+    .service-ticket-cost {
+      font-size: 0.8rem;
+      color: #ff6b6b;
+      margin-top: 5px;
+    }
+    
+    .form-container {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      color: var(--text-color);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.2);
+    }
+    
+    .form-select {
+      width: 100%;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      color: var(--text-color);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      border-radius: 10px;
+      color: var(--light-text);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+    }
+    
+    .submit-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .warning-box {
+      background: rgba(255, 78, 80, 0.1);
+      border: 1px solid var(--accent-color);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    
+    .warning-icon {
+      color: var(--accent-color);
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    
+    .loading-container {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    
+    .loading-dots {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    
+    .loading-dots div {
+      position: absolute;
+      top: 33px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    }
+    
+    .loading-dots div:nth-child(1) {
+      left: 8px;
+      animation: loading-dots1 0.6s infinite;
+    }
+    
+    .loading-dots div:nth-child(2) {
+      left: 8px;
+      animation: loading-dots2 0.6s infinite;
+    }
+    
+    .loading-dots div:nth-child(3) {
+      left: 32px;
+      animation: loading-dots2 0.6s infinite;
+    }
+    
+    .loading-dots div:nth-child(4) {
+      left: 56px;
+      animation: loading-dots3 0.6s infinite;
+    }
+    
+    @keyframes loading-dots1 {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes loading-dots3 {
+      0% { transform: scale(1); }
+      100% { transform: scale(0); }
+    }
+    
+    @keyframes loading-dots2 {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(24px, 0); }
+    }
+    
+    .loading-text {
+      margin-top: 20px;
+      font-size: 1.1rem;
+    }
+    
+    .invoice-container {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .invoice-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+    
+    .invoice-details {
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .invoice-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .invoice-row:last-child {
+      border-bottom: none;
+    }
+    
+    .invoice-label {
+      font-weight: 600;
+    }
+    
+    .invoice-value {
+      direction: ltr;
+      text-align: left;
+    }
+    
+    .price-original {
+      text-decoration: line-through;
+      color: #999;
+      margin-left: 10px;
+    }
+    
+    .price-final {
+      color: var(--success-color);
+      font-weight: 700;
+    }
+    
+    .copy-btn {
+      background: var(--primary-color);
+      color: var(--light-text);
+      border: none;
+      border-radius: 5px;
+      padding: 8px 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .copy-btn:hover {
+      background: var(--secondary-color);
+    }
+    
+    .success-icon {
+      color: var(--success-color);
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    
+    .construction-message {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+    
+    .construction-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--warning-color);
+    }
+    
+    .user-menu {
+      position: absolute;
+      top: 70px;
+      left: 20px;
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      width: 300px;
+      z-index: 100;
+      display: none;
+    }
+    
+    .user-menu-title {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .user-menu-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .user-menu-item:last-child {
+      border-bottom: none;
+    }
+    
+    .order-list {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    .order-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .order-item:last-child {
+      border-bottom: none;
+    }
+    
+    .admin-panel {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .admin-section {
+      margin-bottom: 25px;
+    }
+    
+    .admin-section-title {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .admin-list {
+      max-height: 300px;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+      padding: 15px;
+    }
+    
+    .admin-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .admin-item:last-child {
+      border-bottom: none;
+    }
+    
+    .back-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      color: var(--light-text);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(5px);
+    }
+    
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .footer {
+      margin-top: auto;
+      padding-top: 20px;
+      text-align: center;
+      color: var(--light-text);
+      font-size: 0.8rem;
+    }
+    
+    /* استایل‌های جدید برای بخش قوانین */
+    .rules-container {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .rules-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+    
+    .rules-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .rules-item {
+      padding: 15px;
+      margin-bottom: 10px;
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 8px;
+      border-right: 4px solid var(--primary-color);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    .rules-item i {
+      margin-left: 10px;
+      color: var(--primary-color);
+    }
+    
+    /* استایل‌های جدید برای بخش اکانت رایگان */
+    .free-account-container {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    
+    .account-display {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      font-family: monospace;
+      text-align: center;
+    }
+    
+    .account-email {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      direction: ltr;
+    }
+    
+    .account-password {
+      font-size: 1.1rem;
+      direction: ltr;
+    }
+    
+    .account-message {
+      background: rgba(255, 78, 80, 0.1);
+      border: 1px solid var(--accent-color);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px 0;
+    }
+    
+    /* استایل‌های جدید برای بخش چیت سی پی */
+    .cp-cheat-container {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cp-offers {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .cp-offer {
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      border: 2px solid var(--primary-color);
+    }
+    
+    .cp-offer-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+    
+    .cp-offer-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-bottom: 15px;
+    }
+    
+    .cp-offer-features {
+      list-style-type: none;
+      padding: 0;
+      margin-bottom: 15px;
+      text-align: right;
+    }
+    
+    .cp-offer-features li {
+      padding: 5px 0;
+    }
+    
+    .cp-offer-features li i {
+      margin-left: 10px;
+      color: var(--success-color);
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .details-btn {
+      flex: 1;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--primary-color);
+      border-radius: 8px;
+      color: var(--primary-color);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .details-btn:hover {
+      background: var(--primary-color);
+      color: var(--light-text);
+    }
+    
+    .buy-btn {
+      flex: 2;
+      padding: 10px;
+      background: var(--primary-color);
+      border: none;
+      border-radius: 8px;
+      color: var(--light-text);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .buy-btn:hover {
+      background: var(--secondary-color);
+    }
+    
+    /* استایل‌های جدید برای بخش سایر خدمات */
+    .other-services-container {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .services-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .service-item {
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      border: 1px solid #ddd;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    
+    .service-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .service-item-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+    
+    .service-item-description {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    /* استایل‌های جدید برای بخش فروش و خرید اکانت */
+    .account-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .account-item {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      border: 1px solid #eee;
+    }
+    
+    .account-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .account-id {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    
+    .account-messenger {
+      font-size: 0.8rem;
+      color: #666;
+      background: rgba(0,0,0,0.05);
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+    
+    .account-status {
+      padding: 4px 8px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .status-available {
+      background: rgba(0, 184, 148, 0.2);
+      color: var(--success-color);
+    }
+    
+    .status-sold {
+      background: rgba(255, 78, 80, 0.2);
+      color: var(--accent-color);
+    }
+    
+    .status-buyer {
+      background: rgba(253, 203, 110, 0.2);
+      color: #e17055;
+    }
+    
+    .status-completed {
+      background: rgba(116, 125, 140, 0.2);
+      color: #636e72;
+    }
+    
+    .account-details {
+      margin-bottom: 15px;
+    }
+    
+    .account-detail {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    
+    .account-detail:last-child {
+      border-bottom: none;
+    }
+    
+    .account-detail-label {
+      font-weight: 600;
+      color: #666;
+    }
+    
+    .account-actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .action-btn {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .end-sale-btn {
+      background: var(--accent-color);
+      color: white;
+    }
+    
+    .complete-btn {
+      background: var(--success-color);
+      color: white;
+    }
+    
+    .add-btn {
+      position: fixed;
+      bottom: 80px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      background: var(--primary-color);
+      color: var(--light-text);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      transition: var(--transition);
+    }
+    
+    .add-btn:hover {
+      transform: scale(1.1);
+    }
+    
+    /* استایل‌های جدید برای بخش تبلیغات */
+    .ad-container {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    
+    .ad-title {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+    
+    .ad-description {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .ad-stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+    
+    .ad-stat {
+      text-align: center;
+    }
+    
+    .ad-stat-number {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    
+    .ad-stat-label {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .share-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .share-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .telegram-btn {
+      background: #0088cc;
+      color: white;
+    }
+    
+    .rubika-btn {
+      background: #e91e63;
+      color: white;
+    }
+    
+    .eitaa-btn {
+      background: #4caf50;
+      color: white;
+    }
+    
+    .share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* استایل‌های جدید برای بخش چیت سی پی جدید */
+    .cp-test-container {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cp-uid-input {
+      font-size: 1.2rem;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+    
+    .cp-amounts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    
+    .cp-amount {
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 8px;
+      padding: 15px 10px;
+      text-align: center;
+      border: 1px solid #ddd;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    
+    .cp-amount:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .cp-amount.selected {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .cp-amount.disabled {
+      background: #f5f5f5;
+      color: #999;
+      cursor: not-allowed;
+    }
+    
+    .cp-custom-amount {
+      margin-top: 15px;
+    }
+    
+    .cp-request-status {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+    
+    .status-dots {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 10px;
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      animation: statusPulse 1.5s infinite;
+    }
+    
+    .status-dot:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+    
+    .status-dot:nth-child(3) {
+      animation-delay: 1s;
+    }
+    
+    @keyframes statusPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    
+    .admin-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .reject-btn {
+      flex: 1;
+      padding: 10px;
+      background: var(--accent-color);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .approve-btn {
+      flex: 1;
+      padding: 10px;
+      background: var(--success-color);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .reject-btn:hover, .approve-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .cp-invoice {
+      text-align: center;
+    }
+    
+    .tracking-code {
+      font-family: monospace;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    
+    /* انیمیشن پس‌زمینه */
+    .background-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .plane {
+      position: absolute;
+      top: 20%;
+      right: -200px;
+      width: 200px;
+      height: 80px;
+      background: url('https://cdn-icons-png.flaticon.com/512/824/824068.png') center/contain no-repeat;
+      filter: invert(1);
+      animation: flyIn 30s linear infinite;
+    }
+    
+    .castle {
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      width: 150px;
+      height: 200px;
+      background: url('https://cdn-icons-png.flaticon.com/512/619/619032.png') center/contain no-repeat;
+      filter: invert(1);
+    }
+    
+    .bullets {
+      position: absolute;
+      top: 30%;
+      left: 15%;
+      width: 300px;
+      height: 5px;
+      background: linear-gradient(90deg, transparent, #ff4e50, transparent);
+      border-radius: 50%;
+      animation: shoot 2s infinite;
+    }
+    
+    .explosion {
+      position: absolute;
+      top: 25%;
+      left: 40%;
+      width: 50px;
+      height: 50px;
+      background: radial-gradient(circle, #ff9a00, #ff4e50, transparent);
+      border-radius: 50%;
+      opacity: 0;
+      animation: explode 30s 10s infinite;
+    }
+    
+    .character {
+      position: absolute;
+      bottom: 20%;
+      left: 45%;
+      width: 60px;
+      height: 60px;
+      background: url('https://cdn-icons-png.flaticon.com/512/4333/4333600.png') center/contain no-repeat;
+      filter: invert(1);
+      opacity: 0;
+      animation: characterAppear 30s 15s infinite;
+    }
+    
+    @keyframes flyIn {
+      0% { right: -200px; }
+      20% { right: 30%; }
+      40% { right: 50%; transform: translateY(0); }
+      45% { transform: translateY(-10px); }
+      50% { transform: translateY(0); }
+      55% { transform: translateY(-10px); }
+      60% { transform: translateY(0); }
+      80% { right: 80%; }
+      100% { right: 100%; }
+    }
+    
+    @keyframes shoot {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+    
+    @keyframes explode {
+      0%, 33% { opacity: 0; }
+      34% { opacity: 1; transform: scale(1); }
+      36% { opacity: 0.5; transform: scale(1.5); }
+      38% { opacity: 0; transform: scale(2); }
+      100% { opacity: 0; }
+    }
+    
+    @keyframes characterAppear {
+      0%, 49% { opacity: 0; }
+      50% { opacity: 1; }
+      70% { opacity: 1; }
+      71% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    
+    /* رسپانسیو */
+    @media (max-width: 768px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      .cp-amounts {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .user-stats {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .header {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- صفحه لودینگ -->
+  <div class="loading-page" id="loadingPage">
+    <div class="loading-logo">
+      <div class="logo-circle logo-circle-1"></div>
+      <div class="logo-circle logo-circle-2"></div>
+      <div class="logo-circle logo-circle-3"></div>
+      <div class="logo-text">𝒇𝒆𝒅𝒓𝒂𝒍</div>
+    </div>
+    <div class="loading-text">در حال بارگذاری...</div>
+    <div class="loading-progress">
+      <div class="loading-progress-bar" id="loadingProgress"></div>
+    </div>
+    <button class="channel-btn" onclick="window.open('https://t.me/Mahziaar_YT', '_blank')">
+      <i class="fab fa-telegram"></i> کانال تلگرام
+    </button>
+  </div>
+  
+  <!-- صفحه هدایت به PumpGame -->
+  <div class="pump-redirect-page" id="pumpRedirectPage">
+    <div class="pump-logo"></div>
+    <h2>تست چکا در حال انجام است...</h2>
+    <p class="redirect-timer">بعد از <span id="redirectTimer">40</span> ثانیه به سایت اصلی هدایت می‌شوید</p>
+  </div>
+  
+  <!-- انیمیشن پس‌زمینه -->
+  <div class="background-animation">
+    <div class="plane"></div>
+    <div class="castle"></div>
+    <div class="bullets"></div>
+    <div class="explosion"></div>
+    <div class="character"></div>
+  </div>
+  
+  <!-- محتوای اصلی -->
+  <div class="container" id="mainContainer">
+    <button class="back-btn" id="backBtn" style="display: none;">
+      <i class="fas fa-arrow-right"></i> بازگشت
+    </button>
+    
+    <div class="header">
+      <div class="logo">𝒇𝒆𝒅𝒓𝒂𝒍</div>
+      <div class="user-stats">
+        <div class="user-stat">
+          <i class="fas fa-ticket-alt"></i>
+          <span>2/2</span>
+        </div>
+        <div class="user-stat">
+          <i class="fas fa-coins"></i>
+          <span>0 CP</span>
+        </div>
+        <i class="fas fa-user user-icon" id="userIcon"></i>
+      </div>
+    </div>
+    
+    <!-- منوی کاربر -->
+    <div class="user-menu" id="userMenu">
+      <div class="user-menu-title">پروفایل کاربری</div>
+      <div class="user-menu-item">
+        <strong>کاربر مهمان</strong>
+      </div>
+      <div class="user-menu-item">
+        <div>تعداد استفاده چنج رایگان: <span>0/2</span></div>
+      </div>
+      <div class="user-menu-item">
+        <div>تعداد استفاده چیت سی پی: <span>0/1</span></div>
+      </div>
+      <div class="user-menu-item">
+        <div class="user-menu-title">سفارشات اخیر</div>
+        <div class="order-list">
+          <div class="order-item">هنوز سفارشی ثبت نکرده‌اید</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- محتوای صفحه اصلی -->
+    <div id="mainContent">
+      <div class="welcome-section">
+        <h1 class="welcome-title">به فدرال خوش آمدید</h1>
+        <p class="welcome-text">ارائه دهنده خدمات مختلف بازی کال آف دیوتی موبایل</p>
+      </div>
+      
+      <!-- بخش تبلیغات -->
+      <div class="ad-container">
+        <h2 class="ad-title">آموزش درآمدزایی رایگان</h2>
+        <p class="ad-description">
+          بدون پرداخت حتی ۱ هزار تومان! 💰
+          <br>زمان کوتاه، درآمد عالی
+        </p>
+        <div class="ad-stats">
+          <div class="ad-stat">
+            <div class="ad-stat-number">0</div>
+            <div class="ad-stat-label">بازدید امروز</div>
+          </div>
+          <div class="ad-stat">
+            <div class="ad-stat-number">0</div>
+            <div class="ad-stat-label">اشتراک‌گذاری</div>
+          </div>
+        </div>
+        <div class="share-buttons">
+          <button class="share-btn telegram-btn" onclick="shareAd('telegram')">
+            <i class="fab fa-telegram"></i> تلگرام
+          </button>
+          <button class="share-btn rubika-btn" onclick="shareAd('rubika')">
+            <i class="fas fa-comment"></i> روبیکا
+          </button>
+          <button class="share-btn eitaa-btn" onclick="shareAd('eitaa')">
+            <i class="fas fa-comment-alt"></i> ایتا
+          </button>
+        </div>
+      </div>
+      
+      <div class="services-grid">
+        <!-- چنج رایگان -->
+        <div class="service-card" onclick="showFreeChange()">
+          <div class="service-emoji">🔄</div>
+          <h3 class="service-title">چنج رایگان</h3>
+          <p class="service-description">تعویض اکانت رایگان روزانه</p>
+          <div class="service-badge">روزانه 2 بار</div>
+        </div>
+        
+        <!-- چیت سی پی -->
+        <div class="service-card" onclick="showCpCheat()">
+          <div class="service-emoji">⚡</div>
+          <h3 class="service-title">چیت سی پی (تست)</h3>
+          <p class="service-description">دریافت سی پی رایگان</p>
+          <div class="service-badge">روزانه 1 بار</div>
+        </div>
+        
+        <!-- سایر خدمات -->
+        <div class="service-card" onclick="showOtherServices()">
+          <div class="service-emoji">🎮</div>
+          <h3 class="service-title">سایر خدمات</h3>
+          <p class="service-description">خرید اکانت و آیتم‌های بازی</p>
+        </div>
+        
+        <!-- قوانین -->
+        <div class="service-card" onclick="showRules()">
+          <div class="service-emoji">📜</div>
+          <h3 class="service-title">قوانین و مقررات</h3>
+          <p class="service-description">مطالعه قوانین استفاده از خدمات</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- محتوای صفحات دیگر -->
+    <div id="otherContent" style="display: none;"></div>
+    
+    <div class="footer">
+      <p>تمامی حقوق محفوظ است © 2025 فدرال</p>
+    </div>
+    
+    <!-- دکمه افزودن (برای ادمین) -->
+    <button class="add-btn" id="addBtn" style="display: none;">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+
+  <script>
+    // متغیرهای سراسری
+    let currentPage = 'main';
+    let usedFreeChanges = 0;
+    let usedCpCheats = 0;
+    let cpRequests = [];
+    let redirectTimerValue = 40;
+    
+    // بارگذاری اولیه صفحه
+    window.addEventListener('load', function() {
+      // شبیه‌سازی بارگذاری
+      let progress = 0;
+      const progressBar = document.getElementById('loadingProgress');
+      const loadingInterval = setInterval(() => {
+        progress += Math.random() * 10;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(loadingInterval);
+          
+          // نمایش صفحه هدایت به PumpGame
+          setTimeout(() => {
+            document.getElementById('loadingPage').style.display = 'none';
+            document.getElementById('pumpRedirectPage').style.display = 'flex';
+            
+            // شمارش معکوس برای هدایت
+            const timerElement = document.getElementById('redirectTimer');
+            const redirectInterval = setInterval(() => {
+              redirectTimerValue--;
+              timerElement.textContent = redirectTimerValue;
+              
+              if (redirectTimerValue <= 0) {
+                clearInterval(redirectInterval);
+                document.getElementById('pumpRedirectPage').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'flex';
+              }
+            }, 1000);
+          }, 500);
+        }
+        progressBar.style.width = `${progress}%`;
+      }, 200);
+    });
+    
+    // مدیریت کلیک روی آیکون کاربر
+    document.getElementById('userIcon').addEventListener('click', function() {
+      const userMenu = document.getElementById('userMenu');
+      userMenu.style.display = userMenu.style.display === 'block' ? 'none' : 'block';
+    });
+    
+    // بستن منوی کاربر با کلیک خارج از آن
+    document.addEventListener('click', function(event) {
+      const userIcon = document.getElementById('userIcon');
+      const userMenu = document.getElementById('userMenu');
+      
+      if (!userIcon.contains(event.target) && !userMenu.contains(event.target)) {
+        userMenu.style.display = 'none';
+      }
+    });
+    
+    // مدیریت دکمه بازگشت
+    document.getElementById('backBtn').addEventListener('click', function() {
+      showMainPage();
+    });
+    
+    // نمایش صفحه اصلی
+    function showMainPage() {
+      currentPage = 'main';
+      document.getElementById('mainContent').style.display = 'block';
+      document.getElementById('otherContent').style.display = 'none';
+      document.getElementById('backBtn').style.display = 'none';
+      document.getElementById('addBtn').style.display = 'none';
+      document.getElementById('userMenu').style.display = 'none';
+    }
+    
+    // نمایش بخش چنج رایگان
+    function showFreeChange() {
+      currentPage = 'freeChange';
+      document.getElementById('mainContent').style.display = 'none';
+      document.getElementById('otherContent').style.display = 'block';
+      document.getElementById('backBtn').style.display = 'flex';
+      
+      const freeChangesLeft = 2 - usedFreeChanges;
+      
+      document.getElementById('otherContent').innerHTML = `
+        <div class="free-account-container">
+          <h2 class="service-title">چنج رایگان اکانت</h2>
+          <p>با استفاده از این سرویس می‌توانید به صورت رایگان اکانت خود را تعویض کنید.</p>
+          
+          <div class="account-display">
+            <div class="account-email">Email: fedral${Math.floor(Math.random() * 10000)}@gmail.com</div>
+            <div class="account-password">Password: Fedral${Math.floor(Math.random() * 1000)}</div>
+          </div>
+          
+          <div class="account-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>این اکانت فقط ${freeChangesLeft} بار دیگر در امروز قابل استفاده است.</p>
+          </div>
+          
+          <button class="submit-btn" ${freeChangesLeft <= 0 ? 'disabled' : ''} onclick="useFreeChange()">
+            ${freeChangesLeft <= 0 ? 'امروز استفاده شده' : 'دریافت اکانت رایگان'}
+          </button>
+        </div>
+      `;
+    }
+    
+    // استفاده از چنج رایگان
+    function useFreeChange() {
+      if (usedFreeChanges < 2) {
+        usedFreeChanges++;
+        alert('اکانت رایگان با موفقیت دریافت شد!');
+        showFreeChange();
+      } else {
+        alert('امروز سهمیه چنج رایگان شما به پایان رسیده است.');
+      }
+    }
+    
+    // نمایش بخش چیت سی پی
+    function showCpCheat() {
+      currentPage = 'cpCheat';
+      document.getElementById('mainContent').style.display = 'none';
+      document.getElementById('otherContent').style.display = 'block';
+      document.getElementById('backBtn').style.display = 'flex';
+      
+      document.getElementById('otherContent').innerHTML = `
+        <div class="cp-test-container">
+          <h2 class="form-title">چیت سی پی (تست)</h2>
+          
+          <div class="form-group">
+            <label class="form-label">لطفاً یوآیدی اکانت خود را وارد کنید (19 رقم):</label>
+            <input type="text" class="form-input cp-uid-input" id="cpUid" maxlength="19" placeholder="7375802843281686530" oninput="validateUid(this)">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">تعداد سی پی مورد نظر:</label>
+            <div class="cp-amounts">
+              <div class="cp-amount" onclick="selectCpAmount(40)">40 CP</div>
+              <div class="cp-amount" onclick="selectCpAmount(80)">80 CP</div>
+              <div class="cp-amount" onclick="selectCpAmount(240)">240 CP</div>
+              <div class="cp-amount disabled">120 CP<br><small>به زودی...</small></div>
+              <div class="cp-amount disabled">500 CP<br><small>به زودی...</small></div>
+              <div class="cp-amount disabled">340 CP<br><small>به زودی...</small></div>
+            </div>
+            
+            <div class="cp-custom-amount">
+              <label class="form-label">مقدار دلخواه (حداکثر 9999):</label>
+              <input type="number" class="form-input" id="customCpAmount" min="1" max="9999" placeholder="مقدار دلخواه" oninput="validateCustomAmount(this)">
+            </div>
+          </div>
+          
+          <button class="submit-btn" id="submitCpRequest" onclick="submitCpRequest()" disabled>تایید و ارسال درخواست</button>
+          
+          <div class="warning-box">
+            <div class="warning-icon">
+              <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <p>هر کاربر فقط می‌تواند روزانه یک بار از این سرویس استفاده کند.</p>
+          </div>
+        </div>
+      `;
+    }
+    
+    // اعتبارسنجی یوآیدی
+    function validateUid(input) {
+      input.value = input.value.replace(/[^0-9]/g, '');
+      
+      const submitBtn = document.getElementById('submitCpRequest');
+      if (input.value.length === 19) {
+        submitBtn.disabled = false;
+      } else {
+        submitBtn.disabled = true;
+      }
+    }
+    
+    // انتخاب مقدار سی پی
+    let selectedCpAmount = 0;
+    
+    function selectCpAmount(amount) {
+      selectedCpAmount = amount;
+      
+      // حذف کلاس selected از همه آیتم‌ها
+      document.querySelectorAll('.cp-amount').forEach(item => {
+        item.classList.remove('selected');
+      });
+      
+      // اضافه کردن کلاس selected به آیتم انتخاب شده
+      event.target.classList.add('selected');
+      
+      // غیرفعال کردن مقدار دلخواه
+      document.getElementById('customCpAmount').value = '';
+      
+      // فعال کردن دکمه ارسال
+      document.getElementById('submitCpRequest').disabled = false;
+    }
+    
+    // اعتبارسنجی مقدار دلخواه
+    function validateCustomAmount(input) {
+      if (input.value > 9999) {
+        input.value = 9999;
+      }
+      
+      if (input.value > 0) {
+        selectedCpAmount = parseInt(input.value);
+        
+        // حذف کلاس selected از همه آیتم‌ها
+        document.querySelectorAll('.cp-amount').forEach(item => {
+          item.classList.remove('selected');
+        });
+        
+        // فعال کردن دکمه ارسال
+        document.getElementById('submitCpRequest').disabled = false;
+      }
+    }
+    
+    // ارسال درخواست چیت سی پی
+    function submitCpRequest() {
+      if (usedCpCheats >= 1) {
+        alert('امروز سهمیه چیت سی پی شما به پایان رسیده است.');
+        return;
+      }
+      
+      const uid = document.getElementById('cpUid').value;
+      
+      if (uid.length !== 19) {
+        alert('لطفاً یک یوآیدی معتبر 19 رقمی وارد کنید.');
+        return;
+      }
+      
+      if (selectedCpAmount <= 0) {
+        alert('لطفاً مقدار سی پی را انتخاب کنید.');
+        return;
+      }
+      
+      usedCpCheats++;
+      
+      // ایجاد درخواست جدید
+      const request = {
+        id: Date.now(),
+        uid: uid,
+        amount: selectedCpAmount,
+        status: 'pending',
+        date: new Date().toLocaleString('fa-IR')
+      };
+      
+      cpRequests.push(request);
+      
+      // نمایش وضعیت درخواست
+      document.getElementById('otherContent').innerHTML = `
+        <div class="cp-test-container">
+          <h2 class="form-title">درخواست چیت سی پی</h2>
+          
+          <div class="cp-request-status">
+            <h3>وضعیت: در انتظار تایید شما ...</h3>
+            <div class="status-dots">
+              <div class="status-dot"></div>
+              <div class="status-dot"></div>
+              <div class="status-dot"></div>
+            </div>
+          </div>
+          
+          <div class="admin-actions">
+            <button class="reject-btn" onclick="updateRequestStatus('${request.id}', 'rejected')">رد درخواست</button>
+            <button class="approve-btn" onclick="updateRequestStatus('${request.id}', 'approved')">تایید درخواست</button>
+          </div>
+        </div>
+      `;
+    }
+    
+    // به روزرسانی وضعیت درخواست
+    function updateRequestStatus(requestId, status) {
+      const requestIndex = cpRequests.findIndex(req => req.id == requestId);
+      
+      if (requestIndex !== -1) {
+        cpRequests[requestIndex].status = status;
+        
+        // شبیه‌سازی تاخیر
+        setTimeout(() => {
+          if (status === 'approved') {
+            showCpInvoice(requestId);
+          } else {
+            document.getElementById('otherContent').innerHTML = `
+              <div class="cp-test-container">
+                <h2 class="form-title">درخواست چیت سی پی</h2>
+                
+                <div class="cp-request-status">
+                  <h3>وضعیت: رد شده ❌</h3>
+                  <p>درخواست شما رد شده است.</p>
+                </div>
+                
+                <button class="submit-btn" onclick="showCpCheat()">بازگشت</button>
+              </div>
+            `;
+          }
+        }, 3000);
+        
+        // نمایش وضعیت در حال پردازش
+        document.querySelector('.cp-request-status h3').textContent = 
+          status === 'approved' ? 'وضعیت: تایید شده ✅' : 'وضعیت: رد شده ❌';
+      }
+    }
+    
+    // نمایش فاکتور چیت سی پی
+    function showCpInvoice(requestId) {
+      const request = cpRequests.find(req => req.id == requestId);
+      
+      if (request) {
+        const trackingCode = 'FED' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        
+        document.getElementById('otherContent').innerHTML = `
+          <div class="cp-test-container">
+            <div class="cp-invoice">
+              <h2 class="invoice-title">فاکتور دریافت سی پی</h2>
+              
+              <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+              </div>
+              
+              <p>درخواست شما با موفقیت ثبت شد!</p>
+              
+              <div class="invoice-details">
+                <div class="invoice-row">
+                  <span class="invoice-label">یوآیدی:</span>
+                  <span class="invoice-value">${request.uid}</span>
+                </div>
+                <div class="invoice-row">
+                  <span class="invoice-label">تعداد سی پی:</span>
+                  <span class="invoice-value">${request.amount}</span>
+                </div>
+                <div class="invoice-row">
+                  <span class="invoice-label">وضعیت:</span>
+                  <span class="invoice-value">درحال انجام ...</span>
+                </div>
+                <div class="invoice-row">
+                  <span class="invoice-label">کد پیگیری:</span>
+                  <span class="invoice-value tracking-code">${trackingCode}</span>
+                </div>
+              </div>
+              
+              <div class="warning-box">
+                <p>لطفاً از این صفحه اسکرین‌شات تهیه کنید.</p>
+                <p>هر یوآیدی فقط یک بار می‌تواند از این سرویس استفاده کند.</p>
+              </div>
+              
+              <button class="submit-btn" onclick="showMainPage()">بازگشت به صفحه اصلی</button>
+            </div>
+          </div>
+          
+          `;
+        
+        // شبیه‌سازی تکمیل درخواست بعد از 48 ساعت
+        setTimeout(() => {
+          request.status = 'completed';
+        }, 2000); // در واقعیت باید 48 ساعت باشد
+      }
+    }
+    
+    // نمایش سایر خدمات
+    function showOtherServices() {
+      currentPage = 'otherServices';
+      document.getElementById('mainContent').style.display = 'none';
+      document.getElementById('otherContent').style.display = 'block';
+      document.getElementById('backBtn').style.display = 'flex';
+      
+      document.getElementById('otherContent').innerHTML = `
+        <div class="other-services-container">
+          <h2 class="service-title">سایر خدمات</h2>
+          <p>در این بخش می‌توانید خدمات مختلف مربوط به بازی کال آف دیوتی را مشاهده و خریداری کنید.</p>
+          
+          <div class="services-list">
+            <div class="service-item">
+              <h3 class="service-item-title">اکانت‌های آماده</h3>
+              <p class="service-item-description">اکانت‌های لول بالا با اسکین‌های خاص</p>
+            </div>
+            <div class="service-item">
+              <h3 class="service-item-title">افزایش لول</h3>
+              <p class="service-item-description">ارتقای لول اکانت شما در کمترین زمان</p>
+            </div>
+            <div class="service-item">
+              <h3 class="service-item-title">خرید سی پی</h3>
+              <p class="service-item-description">خرید سی پی با قیمت مناسب</p>
+            </div>
+            <div class="service-item">
+              <h3 class="service-item-title">خدمات خاص</h3>
+              <p class="service-item-description">خدمات سفارشی برای نیازهای خاص شما</p>
+            </div>
+          </div>
+          
+          <div class="construction-message">
+            <div class="construction-icon">
+              <i class="fas fa-tools"></i>
+            </div>
+            <h3>این بخش در حال توسعه است</h3>
+            <p>به زودی خدمات بیشتری در این بخش اضافه خواهد شد.</p>
+          </div>
+        </div>
+      `;
+    }
+    
+    // نمایش قوانین
+    function showRules() {
+      currentPage = 'rules';
+      document.getElementById('mainContent').style.display = 'none';
+      document.getElementById('otherContent').style.display = 'block';
+      document.getElementById('backBtn').style.display = 'flex';
+      
+      document.getElementById('otherContent').innerHTML = `
+        <div class="rules-container">
+          <h2 class="rules-title">قوانین و مقررات</h2>
+          
+          <ul class="rules-list">
+            <li class="rules-item">
+              <i class="fas fa-check-circle"></i>
+              استفاده از سرویس چنج رایگان فقط روزانه 2 بار امکان‌پذیر است.
+            </li>
+            <li class="rules-item">
+              <i class="fas fa-check-circle"></i>
+              استفاده از سرویس چیت سی پی فقط روزانه 1 بار امکان‌پذیر است.
+            </li>
+            <li class="rules-item">
+              <i class="fas fa-check-circle"></i>
+              هر یوآیدی فقط یک بار می‌تواند از سرویس چیت سی پی استفاده کند.
+            </li>
+            <li class="rules-item">
+              <i class="fas fa-check-circle"></i>
+              مسئولیت هرگونه مشکل امنیتی بر عهده کاربر است.
+            </li>
+            <li class="rules-item">
+              <i class="fas fa-check-circle"></i>
+              در صورت بروز هرگونه مشکل، از طریق پشتیبانی پیام دهید.
+            </li>
+            <li class="rules-item">
+              <i class="fas fa-check-circle"></i>
+              استفاده از خدمات به منزله پذیرش کلیه قوانین و مقررات است.
+            </li>
+          </ul>
+          
+          <div class="warning-box">
+            <div class="warning-icon">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <p>تخلف از قوانین منجر به مسدود شدن حساب کاربری خواهد شد.</p>
+          </div>
+        </div>
+      `;
+    }
+    
+    // اشتراک‌گذاری تبلیغ
+    function shareAd(platform) {
+      const message = "آموزش درآمدزایی رایگان بدون هیچ پولی\nاگر میخوای پول دربیاری\nبدون دریافت 1 هزار تومن از شما😊\nزمان ک短اه\nبرای دریافت آموزش پی:\n@Mahziaar_YT";
+      
+      let url = '';
+      switch(platform) {
+        case 'telegram':
+          url = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/Mahziaar_YT')}&text=${encodeURIComponent(message)}`;
+          break;
+        case 'rubika':
+          url = `rubika://share?text=${encodeURIComponent(message)}`;
+          break;
+        case 'eitaa':
+          url = `eitaa://share?text=${encodeURIComponent(message)}`;
+          break;
+      }
+      
+      window.open(url, '_blank');
+      
+      // افزایش شمارنده اشتراک‌گذاری
+      const shareCountElement = document.querySelector('.ad-stat:nth-child(2) .ad-stat-number');
+      let shareCount = parseInt(shareCountElement.textContent);
+      shareCountElement.textContent = shareCount + 1;
+      
+      alert('تبلیغ با موفقیت به اشتراک گذاشته شد!');
+    }
+  </script>
+</body>
+</html>
